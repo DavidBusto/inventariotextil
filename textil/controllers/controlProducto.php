@@ -1,14 +1,6 @@
 <?php
 require_once '../models/modelProducto.php';
 
-
-
-function limpiar($data){
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 function comprobariniciosesion(){
     session_start();
     if(isset($_SESSION['user'])){
@@ -62,19 +54,19 @@ function mostrarProductosFiltrados($categoriaId, $subcategoriaId = null, $subsub
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['submit'])) {
-    $categoriaId = limpiar($_GET['categoria']) ?? null;
-$subcategoriaId = limpiar($_GET['subcategoria']) ?? null;
-$subsubcategoriaId = limpiar($_GET['subsubcategoria']) ?? null;
-$colorId = limpiar($_GET['color']) ?? null;
+    $categoriaId = $_GET['categoria'] ?? null;
+$subcategoriaId = $_GET['subcategoria'] ?? null;
+$subsubcategoriaId = $_GET['subsubcategoria'] ?? null;
+$colorId = $_GET['color'] ?? null;
 
     mostrarProductosFiltrados($categoriaId, $subcategoriaId, $subsubcategoriaId, $colorId);
     exit;
 }
 
-$categoriaId = limpiar($_GET['categoria']) ?? null;
-$subcategoriaId = limpiar($_GET['subcategoria']) ?? null;
-$subsubcategoriaId = limpiar($_GET['subsubcategoria']) ?? null;
-$colorId = limpiar($_GET['color']) ?? null;
+$categoriaId = $_GET['categoria'] ?? null;
+$subcategoriaId = $_GET['subcategoria'] ?? null;
+$subsubcategoriaId = $_GET['subsubcategoria'] ?? null;
+$colorId = $_GET['color'] ?? null;
 
 if ($categoriaId && $subcategoriaId && $subsubcategoriaId) {
     obtenerColoresPorSubsubcategoriaAjax($categoriaId, $subcategoriaId, $subsubcategoriaId);
