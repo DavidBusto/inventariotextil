@@ -44,6 +44,7 @@ function reducirStock($productoId, $cantidad)
     }
 
     if (reducirStockProducto($productoId, $cantidad)) {
+		añadiruso($productoId, $cantidad, $nomusu);
         header("Location: controlStock.php");
     } else {
         echo "Error al reducir el stock del producto.";
@@ -66,11 +67,11 @@ function obtenerSubsubcategoriasAjax($categoriaId, $subcategoriaId)
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['categoria'])) {
-        $categoriaId = limpiar($_GET['categoria']);
+        $categoriaId = $_GET['categoria'];
         if (isset($_GET['subcategoria'])) {
-            $subcategoriaId = limpiar($_GET['subcategoria']);
+            $subcategoriaId = $_GET['subcategoria'];
             if (isset($_GET['subsubcategoria'])) {
-                $subsubcategoriaId = limpiar($_GET['subsubcategoria']);
+                $subsubcategoriaId = $_GET['subsubcategoria'];
                 mostrarFormularioReducirStock($categoriaId, $subcategoriaId, $subsubcategoriaId);
             } else {
                 obtenerSubsubcategoriasAjax($categoriaId, $subcategoriaId);
@@ -86,11 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['producto'], $_POST['cantidad'])) {
         session_start();
-        $productoId = limpiar($_POST['producto']);
+        $productoId = $_POST['producto'];
         $cantidad = limpiar($_POST['cantidad']);
         $nomusu = $_SESSION['user'];
         $fecha_actual = date('d-m-Y');
-        añadiruso($productoId, $cantidad, $nomusu);
 
         reducirStock($productoId, $cantidad);
     }
